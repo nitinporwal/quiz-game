@@ -2,30 +2,6 @@
 /////////////////////////////
 // CODING CHALLENGE
 
-
-/*
---- Let's build a fun quiz game in the console! ---
-
-1. Build a function constructor called Question to describe a question. A question should include:
-a) question itself
-b) the answers from which the player can choose the correct one (choose an adequate data structure here, array, object, etc.)
-c) correct answer (I would use a number for this)
-
-2. Create a couple of questions using the constructor
-
-3. Store them all inside an array
-
-4. Select one random question and log it on the console, together with the possible answers (each question should have a number) (Hint: write a method for the Question objects for this task).
-
-5. Use the 'prompt' function to ask the user for the correct answer. The user should input the number of the correct answer such as you displayed it on Task 4.
-
-6. Check if the answer is correct and print to the console whether the answer is correct ot not (Hint: write another method for this).
-
-7. Suppose this code would be a plugin for other programmers to use in their code. So make sure that all your code is private and doesn't interfere with the other programmers code (Hint: we learned a special technique to do exactly that).
-*/
-
-
-
 /*
 --- Expert level ---
 
@@ -40,7 +16,7 @@ c) correct answer (I would use a number for this)
 
 (function () {
     // 1. Build a function constructor called Question to describe a question.
-    
+    let score=0, maxScore=0;
     function Question(ques, ans, correct) {
         this.question=ques;
         this.answer=ans;
@@ -58,12 +34,19 @@ c) correct answer (I would use a number for this)
     // 6. Check if the answer is correct and print to the console whether the answer is correct ot not
     
     Question.prototype.check = function (answ) {
+        maxScore++;
         if(answ===this.correct) {
+            score++;
             console.log('Wow! correct answer :)');
         }
         else {
             console.log('Wrong answer, Try again :(');
         }
+
+    }
+
+    function displayScore(score) {
+        console.log(`Your score is ${score}/${maxScore}`);
     }
     
     
@@ -101,12 +84,21 @@ c) correct answer (I would use a number for this)
     questions.push(new Question('Which planet is known as the Red Planet?', ['Venus', 'Mercury', 'Mars', 'Jupiter'], 2));
     questions.push(new Question('The largest ‘Democracy’ in the world?', ['China', 'Mexico', 'England', 'India'], 3));
     questions.push(new Question('Which is the largest country in the world?', ['China', 'India', 'Japan', 'Russia'], 3));
-    
-    let rand=Math.floor(Math.random()*questions.length);
-    
-    questions[rand].ask();
-    
-    // 5. Use the 'prompt' function to ask the user for the correct answer.
-    let answ=parseInt(prompt(questions[rand].question));
-    questions[rand].check(answ);
+    function nextQuestion() {
+        let rand=Math.floor(Math.random()*questions.length);
+        
+        questions[rand].ask();
+        
+        // 5. Use the 'prompt' function to ask the user for the correct answer.
+        let answ=prompt(`${questions[rand].question}\nIf you want to quit then write \'exit\'`);
+        if(answ!=='exit') {
+            questions[rand].check(parseInt(answ));
+            displayScore(score);
+            nextQuestion();
+        }
+        else {
+            score=0;
+        }
+    }
+    nextQuestion();
 })();
