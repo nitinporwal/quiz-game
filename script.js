@@ -102,8 +102,6 @@ c) correct answer (I would use a number for this)
     questions.push(new Question('The largest ‘Democracy’ in the world?', ['China', 'Mexico', 'England', 'India'], 3));
     questions.push(new Question('Which is the largest country in the world?', ['China', 'India', 'Japan', 'Russia'], 3));
     
-    console.log(questions);
-    
     let rand=Math.floor(Math.random()*questions.length);
     
     questions[rand].ask();
