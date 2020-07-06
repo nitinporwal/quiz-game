@@ -46,6 +46,15 @@ function Question(ques, ans, correct) {
     this.correct=correct;
 }
 
+// 4. Select one random question and log it on the console
+
+Question.prototype.ask = function () {
+    console.log(this.question);
+    for(let i=0; i<this.answer.length; i++) {
+        console.log(i + ": " + this.answer[i]);
+    }
+}
+
 // 2. & 3. Create a couple of questions using the constructor & Store them all inside an array
 
 let questions=[];
@@ -82,3 +91,8 @@ questions.push(new Question('The largest ‘Democracy’ in the world?', ['China
 questions.push(new Question('Which is the largest country in the world?', ['China', 'Russia', 'India', 'Japan'], 1));
 
 console.log(questions);
+
+
+let rand=Math.floor(Math.random()*questions.length);
+
+questions[rand].ask();
